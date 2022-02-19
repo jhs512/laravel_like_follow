@@ -13,8 +13,14 @@ class ArticleFactory extends Factory
      */
     public function definition()
     {
+        static $user_id = 1;
+
+        if ($user_id > 10) {
+            $user_id = 1;
+        }
+
         return [
-            'user_id' => rand(1, 10),
+            'user_id' => $user_id++,
             'title' => $this->faker->sentence(),
             'body' => $this->faker->text(200),
         ];

@@ -491,6 +491,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .t-ml-auto {
   margin-left: auto;
 }
+.t-mt-3 {
+  margin-top: 0.75rem;
+}
 .t-mt-2 {
   margin-top: 0.5rem;
 }
@@ -499,9 +502,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .t--ml-px {
   margin-left: -1px;
-}
-.t-mt-3 {
-  margin-top: 0.75rem;
 }
 .t-block {
   display: block;
@@ -648,17 +648,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(10 88 202 / var(--tw-text-opacity));
 }
-.t-text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
-}
-.t-text-gray-200 {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
-}
 .t-text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+.t-text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 .t-shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -687,21 +683,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 .t-ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-.hover\:t-text-gray-500:hover {
+.hover\:t-text-gray-300:hover {
   --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 .hover\:t-text-gray-400:hover {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-.hover\:t-text-gray-200:hover {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
-}
-.hover\:t-text-gray-300:hover {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 .focus\:t-z-10:focus {
   z-index: 10;
@@ -726,14 +714,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .active\:t-text-gray-700:active {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
-}
-.active\:t-text-gray-500:active {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-.active\:t-text-gray-200:active {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 .active\:t-text-gray-300:active {
   --tw-text-opacity: 1;
