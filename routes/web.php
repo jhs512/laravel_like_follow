@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ReactionPointController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,12 @@ Route::get('/', function () {
 })->name('home');
 
 Route::resource('articles', ArticleController::class);
+
+Route::prefix('reaction-points/')->middleware('auth')->group(function () {
+    Route::get('good/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeGood']); // 임시로 get, 원래는 post
+    Route::delete('good/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'cancelGood']);
+    Route::get('bad/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeBad']); // 임시로 get, 원래는 post
+    Route::delete('bad/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'cancelBad']);
+});
 
 Auth::routes();

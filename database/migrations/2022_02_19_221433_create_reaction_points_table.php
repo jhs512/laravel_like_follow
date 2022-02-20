@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArticlesTable extends Migration
+class CreateReactionPointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('reaction_points', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id')->constrained();
-            $table->string('title', 200);
-            $table->longText('body');
-            $table->string('img_1')->nullable();
-            $table->unsignedBigInteger('good_reaction_point')->default(0);
-            $table->unsignedBigInteger('bad_reaction_point')->default(0);
+            $table->string('reaction_pointable_type', 20);
+            $table->unsignedBigInteger('reaction_pointable_id');
+            $table->unsignedSmallInteger('point')->default(0);
         });
     }
 
@@ -32,6 +30,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('reaction_points');
     }
 }

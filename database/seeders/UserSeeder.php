@@ -14,6 +14,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // 현재로직에서는 10개가 최대입니다.
+        // 더 넘으면 데이터가 안맞습니다.
         User::factory(10)->create();
     }
 }

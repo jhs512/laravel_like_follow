@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ArticleSaveRequest;
 
@@ -24,7 +23,7 @@ class ArticleController extends Controller
     {
         $articles = Article::with('user')->orderBy('id', 'desc');
 
-        if ( $request->input('search_keyword') ) {
+        if ($request->input('search_keyword')) {
             $articles = $articles->where('title', 'like', "%{$request->input('search_keyword')}%");
             $articles = $articles->orWhere('body', 'like', "%{$request->input('search_keyword')}%");
         }
@@ -113,7 +112,7 @@ class ArticleController extends Controller
         $article->title = $validated['title'];
         $article->body = $validated['body'];
 
-        if ( isset($validated['img_1__remove'] )) {
+        if (isset($validated['img_1__remove'])) {
             if ($article->img_1) {
                 Storage::disk('public')->delete($article->img_1);
             }
