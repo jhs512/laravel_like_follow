@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ArticleSaveRequest;
 
@@ -21,7 +22,7 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $articles = Article::with('user')->orderBy('id', 'desc');
+        $articles = Article::with('user')->with('logined_user_reaction_points')->orderBy('id', 'desc');
 
         if ($request->input('search_keyword')) {
             $articles = $articles->where('title', 'like', "%{$request->input('search_keyword')}%");

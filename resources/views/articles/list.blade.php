@@ -45,7 +45,12 @@
                                     </div>
 
                                     <a href="{{ route('articles.show', $article->id) }}"
-                                        class="t-block card-title t-truncate">{{ $article->title }}</a>
+                                        class="t-block card-title t-truncate">
+                                        @if ( count($article->logined_user_reaction_points) > 0 and $article->logined_user_reaction_points[0]->point > 0 )
+                                            <span class="t-text-red-500"><i class="fa-solid fa-heart"></i></span>
+                                        @endif
+                                        <span>{{ $article->title }}</span>
+                                    </a>
 
                                     <a href="{{ route('articles.show', $article->id) }}"
                                         class="t-block card-text t-text-gray-500">
@@ -53,6 +58,15 @@
                                             {{ $article->body }}
                                         </div>
                                     </a>
+
+                                    <div class="t-flex t-gap-3">
+                                        <span>
+                                            <i class="fa-regular fa-thumbs-up"></i> {{$article->good_reaction_point}}
+                                        </span>
+                                        <span>
+                                            <i class="fa-regular fa-thumbs-down"></i> {{$article->bad_reaction_point}}
+                                        </span>
+                                    </div>
 
                                     <div class="t-flex t-justify-end">
                                         @can('update', $article)
