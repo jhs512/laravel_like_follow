@@ -19,7 +19,9 @@ class CreateReactionPointsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('reaction_pointable_type', 20);
             $table->unsignedBigInteger('reaction_pointable_id');
-            $table->unsignedSmallInteger('point')->default(0);
+            $table->smallInteger('point')->default(0);
+
+            $table->unique(array('reaction_pointable_type', 'reaction_pointable_id', 'user_id'), 'unique_key_1');
         });
     }
 

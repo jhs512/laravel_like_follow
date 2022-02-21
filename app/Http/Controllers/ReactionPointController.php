@@ -9,13 +9,22 @@ use Illuminate\Support\Facades\Gate;
 
 class ReactionPointController extends Controller
 {
-    public function makeBad(string $reactionPointableType, int $reactionPointableId)
+    public function makeBad(string $simpleReactionPointableType, int $reactionPointableId)
     {
-        return $reactionPointableType;
+        Gate::authorize('makeBadReactionPoint', [ReactionPoint::class, $simpleReactionPointableType, $reactionPointableId]);
+
+        ReactionPoint::makeBad($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
+
+        return '싫어요. 성공 ^ ^';
     }
 
-    public function cancelBad(string $reactionPointableType, int $reactionPointableId)
+    public function cancelBad(string $simpleReactionPointableType, int $reactionPointableId)
     {
+        Gate::authorize('cancelBadReactionPoint', [ReactionPoint::class, $simpleReactionPointableType, $reactionPointableId]);
+
+        ReactionPoint::cancelBad($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
+
+        return '싫어요. 취소 성공 ^ ^';
     }
 
     public function makeGood(string $simpleReactionPointableType, int $reactionPointableId)
@@ -24,11 +33,15 @@ class ReactionPointController extends Controller
 
         ReactionPoint::makeGood($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
 
-        return '성공 ^ ^';
+        return '좋아요. 성공 ^ ^';
     }
 
-    public function cancelGood(string $reactionPointableType, int $reactionPointableId)
+    public function cancelGood(string $simpleReactionPointableType, int $reactionPointableId)
     {
-        //
+        Gate::authorize('cancelGoodReactionPoint', [ReactionPoint::class, $simpleReactionPointableType, $reactionPointableId]);
+
+        ReactionPoint::cancelGood($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
+
+        return '좋아요. 취소 성공 ^ ^';
     }
 }

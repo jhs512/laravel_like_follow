@@ -22,26 +22,63 @@ class ReactionPoint extends Model
         return ReactionPoint::where('reaction_pointable_type', $reactionPointableType)->where('reaction_pointable_id', $reactionPointableId)->where('user_id', $userId)->first();
     }
 
-    public static function makeGood(string $simpleReactionPointableType, int $reactionPointableId, int $userId)
-    {
+    public static function createReactionPoint(string $simpleReactionPointableType, int $reactionPointableId, int $userId, int $point) {
         $reactionPointableType = static::getReactionPointableTypeBy($simpleReactionPointableType);
 
-        $reactionPoint = static::create([
+        return static::create([
             'reaction_pointable_type' => $reactionPointableType,
             'reaction_pointable_id' => $reactionPointableId,
             'user_id' => $userId,
-            'point' => 1,
+            'point' => $point,
         ]);
+    }
 
-        $reaction_pointable = $reactionPoint->reaction_pointable;
+    public static function updateReactionPointablePoints(ReactionPoint $reactionPoint) {
+        $reactionPointable = $reactionPoint->reaction_pointable;
 
-        $goodReactionPointSum = static::where('reaction_pointable_type', $reactionPointableType)
-            ->where('reaction_pointable_id', $reactionPointableId)
+        $goodReactionPointSum = static::where('reaction_pointable_type', $reactionPoint->reaction_pointable_type)
+            ->where('reaction_pointable_id', $reactionPoint->reaction_pointable_id)
             ->where('point', '>', 0)
             ->sum('point');
 
-        $reaction_pointable->good_reaction_point = $goodReactionPointSum;
-        $reaction_pointable->save();
+        $reactionPointable->good_reaction_point = $goodReactionPointSum;
+
+        $badReactionPointSum = static::where('reaction_pointable_type', $reactionPoint->reaction_pointable_type)
+            ->where('reaction_pointable_id', $reactionPoint->reaction_pointable_id)
+            ->where('point', '<', 0)
+            ->sum('point');
+
+        $reactionPointable->bad_reaction_point = $badReactionPointSum * -1;
+
+        $reactionPointable->save();
+    }
+
+    public static function makeGood(string $simpleReactionPointableType, int $reactionPointableId, int $userId)
+    {
+        $reactionPoint = static::createReactionPoint($simpleReactionPointableType, $reactionPointableId, $userId, 1);
+        static::updateReactionPointablePoints($reactionPoint);
+    }
+
+    public static function cancelGood(string $simpleReactionPointableType, int $reactionPointableId, int $userId)
+    {
+        $reactionPoint = static::findBy($simpleReactionPointableType, $reactionPointableId, $userId);
+        $reactionPoint->delete();
+
+        static::updateReactionPointablePoints($reactionPoint);
+    }
+
+    public static function makeBad(string $simpleReactionPointableType, int $reactionPointableId, int $userId)
+    {
+        $reactionPoint = static::createReactionPoint($simpleReactionPointableType, $reactionPointableId, $userId, -1);
+        static::updateReactionPointablePoints($reactionPoint);
+    }
+
+    public static function cancelBad(string $simpleReactionPointableType, int $reactionPointableId, int $userId)
+    {
+        $reactionPoint = static::findBy($simpleReactionPointableType, $reactionPointableId, $userId);
+        $reactionPoint->delete();
+
+        static::updateReactionPointablePoints($reactionPoint);
     }
 
     public static function getReactionPointableTypeBy(string $simpleReactionPointableType)

@@ -22,10 +22,18 @@ Route::get('/', function () {
 Route::resource('articles', ArticleController::class);
 
 Route::prefix('reaction-points/')->middleware('auth')->group(function () {
-    Route::get('good/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeGood']); // 임시로 get, 원래는 post
+    Route::post('good/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeGood']); // 임시로 get, 원래는 post
     Route::delete('good/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'cancelGood']);
-    Route::get('bad/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeBad']); // 임시로 get, 원래는 post
+    Route::post('bad/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeBad']); // 임시로 get, 원래는 post
     Route::delete('bad/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'cancelBad']);
+
+    /*
+    개발용
+    */
+    Route::get('make-good/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeGood']); // 임시로 get, 원래는 post
+    Route::get('cancel-good/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'cancelGood']);
+    Route::get('make-bad/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'makeBad']); // 임시로 get, 원래는 post
+    Route::get('cancel-bad/{reactionPointableType}/{reactionPointableId}', [ReactionPointController::class, 'cancelBad']);
 });
 
 Auth::routes();
