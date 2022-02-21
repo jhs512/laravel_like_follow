@@ -43,6 +43,55 @@
                     {!! nl2br(e($article->body)) !!}
                 </div>
 
+                <div class="t-flex t-gap-3">
+                    <span>
+                        <i class="fa-regular fa-thumbs-up"></i> {{$article->good_reaction_point}}
+                    </span>
+                    <span>
+                        <i class="fa-regular fa-thumbs-down"></i> {{$article->bad_reaction_point}}
+                    </span>
+                </div>
+
+                <div class="t-flex t-gap-3">
+                    @can('makeGoodReactionPoint', [App\Models\ReactionPoint::class, 'article', $article->id])
+                    <form class="t-m-0" action="{{ route('reaction-points.make-good', ['article', $article->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fa-regular fa-thumbs-up"></i> +1
+                        </button>
+                    </form>
+                    @endcan
+
+                    @can('makeBadReactionPoint', [App\Models\ReactionPoint::class, 'article', $article->id])
+                    <form class="t-m-0" action="{{ route('reaction-points.make-bad', ['article', $article->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fa-regular fa-thumbs-down"></i> -1
+                        </button>
+                    </form>
+                    @endcan
+                    
+                    @can('cancelGoodReactionPoint', [App\Models\ReactionPoint::class, 'article', $article->id])
+                        <form class="t-m-0" action="{{ route('reaction-points.cancel-good', ['article', $article->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-thumbs-up"></i> +1
+                            </button>
+                        </form>
+                    @endcan
+
+                    @can('cancelBadReactionPoint', [App\Models\ReactionPoint::class, 'article', $article->id])
+                        <form class="t-m-0" action="{{ route('reaction-points.cancel-bad', ['article', $article->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-thumbs-down"></i> -1
+                            </button>
+                        </form>
+                    @endcan
+                </div>
+
                 <div class="t-flex t-gap-4">
                     @can('update', $article)
                         <a href="{{ route('articles.edit', $article->id) }}" href="#" class="btn btn-link">

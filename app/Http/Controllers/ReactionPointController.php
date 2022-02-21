@@ -15,7 +15,7 @@ class ReactionPointController extends Controller
 
         ReactionPoint::makeBad($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
 
-        return '싫어요. 성공 ^ ^';
+        return redirect()->back()->with('success', "싫어요 처리 하였습니다.");
     }
 
     public function cancelBad(string $simpleReactionPointableType, int $reactionPointableId)
@@ -24,7 +24,7 @@ class ReactionPointController extends Controller
 
         ReactionPoint::cancelBad($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
 
-        return '싫어요. 취소 성공 ^ ^';
+        return redirect()->back()->with('success', "싫어요를 취소처리 하였습니다.");
     }
 
     public function makeGood(string $simpleReactionPointableType, int $reactionPointableId)
@@ -33,7 +33,7 @@ class ReactionPointController extends Controller
 
         ReactionPoint::makeGood($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
 
-        return '좋아요. 성공 ^ ^';
+        return redirect()->back()->with('success', "좋아요 처리 하였습니다.");
     }
 
     public function cancelGood(string $simpleReactionPointableType, int $reactionPointableId)
@@ -42,6 +42,6 @@ class ReactionPointController extends Controller
 
         ReactionPoint::cancelGood($simpleReactionPointableType, $reactionPointableId, auth()->user()->id);
 
-        return '좋아요. 취소 성공 ^ ^';
+        return redirect()->back()->with('success', "좋아요를 취소처리 하였습니다.");
     }
 }

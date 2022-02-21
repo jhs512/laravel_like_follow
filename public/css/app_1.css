@@ -572,6 +572,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .t-gap-4 {
   gap: 1rem;
 }
+.t-gap-3 {
+  gap: 0.75rem;
+}
 .t-truncate {
   overflow: hidden;
   text-overflow: ellipsis;
